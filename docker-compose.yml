@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 services:
   # hassio:
@@ -11,6 +11,14 @@ services:
   #   network_mode: host
   #   ports:
   #     - "8123:8123"
+  adguard:
+    container_name:
+    image: "adguard/adguardhome:armhf-latest"
+    volumes:
+      - volume_adguard_work:/opt/adguardhome/work
+      - volume_adguard_conf:/opt/adguardhome/conf
+    network_mode: host
+
   openhab:
     container_name: openHab
     image: "openhab/openhab:2.5.3-snapshot-armhf-debian"
@@ -20,13 +28,13 @@ services:
     restart: always
     network_mode: host
     privileged: true
-    # volumes:
-    #   # - "/etc/localtime:/etc/localtime:ro"
-    #   # - "/etc/timezone:/etc/timezone:ro"
-    #   - "./openhab_addons:/openhab/addons"
-    #   - "./openhab_conf:/openhab/conf"
-    #   - "./openhab_userdata:/openhab/userdata"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./openhab_addons:/openhab/addons
+      - ./openhab_conf:/openhab/conf
+      - ./openhab_userdata:/openhab/userdata
     environment:
-      OPENHAB_HTTP_PORT: "8080"
-      OPENHAB_HTTPS_PORT: "8443"
-      EXTRA_JAVA_OPTS: "-Duser.timezone=Europe/Berlin"
+      OPENHAB_HTTP_PORT: '8080'
+      OPENHAB_HTTPS_PORT: '8443'
+      EXTRA_JAVA_OPTS: '-Duser.timezone=Europe/Berlin'
