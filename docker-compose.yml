@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  kea:
+    container_name: kea
+    build:
+      context: ./kea
+      dockerfile: Dockerfile
+    privileged: false
+    restart: unless-stopped
+  pihole:
+    container_name: pihole
+    build:
+        context: ./pihole
+        dockerfile: Dockerfile
+    environment:
+      TZ: 'Europe/Luxembourg'
+      WEBPASSWORD: 'admin'
+      WEB_PORT: 80
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    network_mode: host
