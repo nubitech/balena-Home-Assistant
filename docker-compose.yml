@@ -1,5 +1,9 @@
 version: '2.1'
 
+volumes:
+  volume_adguard_conf:
+  volume_adguard_work:
+
 services:
   # hassio:
   #   container_name: hassio
