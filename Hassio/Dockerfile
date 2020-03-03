@@ -1,4 +1,4 @@
-FROM ububtu:latest
+FROM ubuntu:latest
 
 # Fixes required to run on balenaOS
 
