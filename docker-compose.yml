@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  kea:
+  hassio:
     container_name: hassio
     build:
       context: ./Hassio
