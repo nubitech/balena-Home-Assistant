@@ -16,8 +16,8 @@ services:
     container_name:
     image: "adguard/adguardhome:armhf-latest"
     volumes:
-      - volume_adguard_work:/opt/adguardhome/work
-      - volume_adguard_conf:/opt/adguardhome/conf
+      - 'volume_adguard_work:/opt/adguardhome/work'
+      - 'volume_adguard_conf:/opt/adguardhome/conf'
     network_mode: host
 
   openhab:
