@@ -1,4 +1,4 @@
-version: '2.2'
+version: '2'
 
 services:
   # hassio:
@@ -11,9 +11,11 @@ services:
   #   network_mode: host
   #   ports:
   #     - "8123:8123"
-
   openhab:
     container_name: openHab
+    build:
+      context: ./openHab
+      dockerfile: Dockerfile
     restart: always
     network_mode: host
     volumes:
