@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-# Fixes required to run on balenaOS
+CMD ["bash"]
 
 # RUN apt-get update \
 #    apt-get install bash jq curl avahi-daemon dbus software-properties-common apparmor-utils \
