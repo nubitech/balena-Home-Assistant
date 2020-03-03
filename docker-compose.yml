@@ -12,10 +12,6 @@ services:
   #   ports:
   #     - "8123:8123"
 
-  volumes:
-    volume_adguard_conf:
-    volume_adguard_work:
-
   adguard:
     container_name:
     image: "adguard/adguardhome:armhf-latest"
