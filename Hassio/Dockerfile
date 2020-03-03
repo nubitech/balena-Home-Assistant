@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM balenalib/armv7hf-ubuntu
 
 CMD ["bash"]
 
