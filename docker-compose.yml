@@ -13,9 +13,10 @@ services:
   #     - "8123:8123"
   openhab:
     container_name: openHab
-    build:
-      context: ./openHab
-      dockerfile: Dockerfile
+    image: "openhab/openhab:2.5.3-snapshot-armhf-debian"
+    # build:
+    #   context: ./openHab
+    #   dockerfile: Dockerfile
     restart: always
     network_mode: host
     privileged: true
