@@ -10,7 +10,7 @@ volumes:
 services:
   adguard:
     container_name:
-    image: "adguard/adguardhome:armhf-latest"
+    image: "adguard/adguardhome:arm64-latest"
     volumes:
       - 'volume_adguard_work:/opt/adguardhome/work'
       - 'volume_adguard_conf:/opt/adguardhome/conf'
@@ -18,7 +18,7 @@ services:
 
   openhab:
     container_name: openHab
-    image: "openhab/openhab:2.5.3-snapshot-armhf-debian"
+    image: "openhab/openhab:2.5.3-snapshot-arm64-debian"
     # build:
     #   context: ./openHab
     #   dockerfile: Dockerfile
