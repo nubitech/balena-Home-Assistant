@@ -8,17 +8,6 @@ volumes:
   openhab_userdata:
 
 services:
-  # hassio:
-  #   container_name: hassio
-  #   build:
-  #     context: ./Hassio
-  #     dockerfile: Dockerfile
-  #   privileged: true
-  #   restart: unless-stopped
-  #   network_mode: host
-  #   ports:
-  #     - "8123:8123"
-
   adguard:
     container_name:
     image: "adguard/adguardhome:armhf-latest"
