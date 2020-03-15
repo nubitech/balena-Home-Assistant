@@ -4,6 +4,10 @@ volumes:
   volume_adguard_conf:
   volume_adguard_work:
   volume_homeassistant:
+  volume_node_red:
+  volume_mqtt_config:
+  volume_mqtt_data:
+  volume_mqtt_log:
 
 services:
 
@@ -19,8 +23,39 @@ services:
     build:
       context: ./Homeassistant
       dockerfile: Dockerfile
+    depends_on:
+      # Start mqtt first
+      - mqtt
     volumes:
       - volume_homeassistant:/config
     ports:
       - 8123:8123
     network_mode: host
+
+  nodered:
+    container_name: nodered
+    image: nodered/node-red
+    ports:
+      - 1880:1880
+    volumes:
+      # Local path where all Node-RED config will be stored.
+      - 'volume_node_red:/data'
+    depends_on:
+      - homeassistant
+    environment:
+      TZ: "Europe/Luxembourg"
+    # user: "${LOCAL_USER}:${LOCAL_USER}"
+    restart: unless-stopped
+
+  mqtt:
+    container_name: mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - 'volume_mqtt_config/mosquitto.conf:/mqtt/config/mosquitto.conf'
+      - 'volume_mqtt_data:/mosquitto/data'
+      - 'volume_mqtt_log:/mosquitto/log'
+    restart: always
