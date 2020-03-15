@@ -58,4 +58,3 @@ services:
       - 'volume_mqtt_config/mosquitto.conf:/mqtt/config/mosquitto.conf'
       - 'volume_mqtt_data:/mosquitto/data'
       - 'volume_mqtt_log:/mosquitto/log'
-    restart: always
