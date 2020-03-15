@@ -1,4 +1,2 @@
 FROM homeassistant/raspberrypi4-64-homeassistant:stable
-WORKDIR /scripts
-COPY scripts/. .
 CMD [ "/bin/bash", "start.sh" ]
