@@ -6,6 +6,7 @@ volumes:
   volume_homeassistant:
 
 services:
+
   adguard:
     container_name: adguard
     image: "adguard/adguardhome:arm64-latest"
@@ -17,7 +18,7 @@ services:
   homeassistant:
     build:
       context: ./Homeassistant
-       dockerfile: Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - volume_homeassistant:/config
     ports:
