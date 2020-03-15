@@ -3,35 +3,23 @@ version: '2.1'
 volumes:
   volume_adguard_conf:
   volume_adguard_work:
-  openhab_addons:
-  openhab_conf:
-  openhab_userdata:
+  volume_homeassistant:
 
 services:
   adguard:
-    container_name:
+    container_name: adguard
     image: "adguard/adguardhome:arm64-latest"
     volumes:
       - 'volume_adguard_work:/opt/adguardhome/work'
       - 'volume_adguard_conf:/opt/adguardhome/conf'
     network_mode: host
 
-  openhab:
-    container_name: openHab
-    image: "openhab/openhab:2.5.3-snapshot-arm64-debian"
-    # build:
-    #   context: ./openHab
-    #   dockerfile: Dockerfile
-    restart: always
-    network_mode: host
-    privileged: true
+  homeassistant:
+    build:
+      context: ./Homeassistant
+       dockerfile: Dockerfile
     volumes:
-      # - '/etc/localtime:/etc/localtime:ro'
-      # - '/etc/timezone:/etc/timezone:ro'
-      - 'openhab_addons:/openhab/addons'
-      - 'openhab_conf:/openhab/conf'
-      - 'openhab_userdata:/openhab/userdata'
-    environment:
-      OPENHAB_HTTP_PORT: '8080'
-      OPENHAB_HTTPS_PORT: '8443'
-      EXTRA_JAVA_OPTS: '-Duser.timezone=Europe/Berlin'
+      - volume_homeassistant:/config
+    ports:
+      - 8123:8123
+    network_mode: host
