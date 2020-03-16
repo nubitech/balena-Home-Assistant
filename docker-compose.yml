@@ -39,7 +39,7 @@ services:
       - 1880:1880
     volumes:
       # Local path where all Node-RED config will be stored.
-      - 'volume_node_red:/data'
+      - volume_node_red:/data
     depends_on:
       - homeassistant
     environment:
@@ -47,14 +47,14 @@ services:
     # user: "${LOCAL_USER}:${LOCAL_USER}"
     restart: unless-stopped
 
-  mqtt:
-    container_name: mosquitto
-    image: eclipse-mosquitto:latest
-    restart: unless-stopped
-    ports:
-      - 1883:1883
-      - 9001:9001
-    volumes:
-      - 'volume_mqtt_config/mosquitto.conf:/mqtt/config/mosquitto.conf'
-      - 'volume_mqtt_data:/mosquitto/data'
-      - 'volume_mqtt_log:/mosquitto/log'
+  # mqtt:
+  #   container_name: mosquitto
+  #   image: eclipse-mosquitto:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 1883:1883
+  #     - 9001:9001
+  #   volumes:
+  #     - volume_mqtt_config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  #     - volume_mqtt_data:/mosquitto/data
+  #     - volume_mqtt_log:/mosquitto/log
