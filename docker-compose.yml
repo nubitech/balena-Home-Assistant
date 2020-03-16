@@ -18,15 +18,15 @@ services:
       - 'volume_adguard_conf:/opt/adguardhome/conf'
     network_mode: host
 
- mqtt:
-   container_name: mosquitto
-   image: arm64v8/eclipse-mosquitto
-   restart: unless-stopped
-   ports:
-     - 1883:1883
-   volumes:
-     - volume_mosquitto:/mosquitto
-
+  mqtt:
+    container_name: mosquitto
+    image: arm64v8/eclipse-mosquitto
+    restart: unless-stopped
+    ports:
+      - 1883:1883
+    volumes:
+      - volume_mosquitto:/mosquitto
+      
   homeassistant:
     build: Homeassistant
     restart: unless-stopped
