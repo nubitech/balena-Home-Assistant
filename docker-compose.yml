@@ -23,9 +23,8 @@ services:
     build:
       context: ./Homeassistant
       dockerfile: Dockerfile
-    #depends_on:
-      # Start mqtt first
-      #- mqtt
+    depends_on:
+      - mqtt
     volumes:
       - volume_homeassistant:/config
     ports:
@@ -38,7 +37,6 @@ services:
     ports:
       - 1880:1880
     volumes:
-      # Local path where all Node-RED config will be stored.
       - volume_node_red:/data
     depends_on:
       - homeassistant
