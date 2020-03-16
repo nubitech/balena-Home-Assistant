@@ -23,7 +23,7 @@ services:
     build:
       context: ./Homeassistant
       dockerfile: Dockerfile
-    depends_on:
+    #depends_on:
       # Start mqtt first
       #- mqtt
     volumes:
