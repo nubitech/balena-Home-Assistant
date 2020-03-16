@@ -1,5 +1,5 @@
-FROM eclipse-mosquitto:latest
-
-COPY mosquitto.conf /mosquitto/config/
+#FROM eclipse-mosquitto:latest
+FROM arm32v6/eclipse-mosquitto
+#COPY mosquitto.conf /mosquitto/config/
 
 #CMD [ "/bin/bash" ]

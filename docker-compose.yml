@@ -4,10 +4,11 @@ volumes:
   volume_adguard_conf:
   volume_adguard_work:
   volume_homeassistant:
+  volume_hass_config:
   volume_node_red:
-  volume_mqtt_config:
-  volume_mqtt_data:
-  volume_mqtt_log:
+  # volume_mqtt_config:
+  # volume_mqtt_data:
+  # volume_mqtt_log:
 
 services:
 
@@ -20,14 +21,12 @@ services:
     network_mode: host
 
   homeassistant:
-    build:
-      context: ./Homeassistant
-      dockerfile: Dockerfile
+    build: Homeassistant
     restart: always
-    depends_on:
-      - mqtt
-    links:
-      - mqtt
+    # depends_on:
+    #   - mqtt
+    # links:
+    #   - mqtt
     volumes:
       - volume_homeassistant:/config
     ports:
@@ -36,6 +35,16 @@ services:
     environment:
       HA_SERVER_MQTT_HOST: 'mqtt'
       HA_SERVER_MQTT_PORT: '1883'
+
+  hass-configurator:
+    image: "causticlab/hass-configurator-docker:arm"
+    restart: always
+    ports:
+      - 3218:3218
+    volumes:
+      - volume_homeassistant:/hass-config
+    environment:
+      - HC_BASEPATH=/hass-config
 
   nodered:
     container_name: nodered
@@ -52,14 +61,12 @@ services:
 
   mqtt:
     container_name: mosquitto
-    build:
-      context: ./Mosquitto
-      dockerfile: Dockerfile
+    image: arm64v8/eclipse-mosquitto
     restart: always
     ports:
       - 1883:1883
-      - 9001:9001
-    volumes:
-      - volume_mqtt_config:/mosquitto/config/mosquitto.conf
-      - volume_mqtt_data:/mosquitto/data
-      - volume_mqtt_log:/mosquitto/log
+    #   - 9001:9001
+    # volumes:
+    #   - volume_mqtt_config:/mosquitto/config/mosquitto.conf
+    #   - volume_mqtt_data:/mosquitto/data
+    #   - volume_mqtt_log:/mosquitto/log
