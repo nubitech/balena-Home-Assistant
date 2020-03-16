@@ -23,17 +23,24 @@ services:
     build:
       context: ./Homeassistant
       dockerfile: Dockerfile
+    restart: always
     depends_on:
+      - mqtt
+    links:
       - mqtt
     volumes:
       - volume_homeassistant:/config
     ports:
       - 8123:8123
     network_mode: host
+    environment:
+      HA_SERVER_MQTT_HOST: 'mqtt'
+      HA_SERVER_MQTT_PORT: '1883'
 
   nodered:
     container_name: nodered
     image: nodered/node-red
+    restart: always
     ports:
       - 1880:1880
     volumes:
@@ -42,15 +49,13 @@ services:
       - homeassistant
     environment:
       TZ: "Europe/Luxembourg"
-    # user: "${LOCAL_USER}:${LOCAL_USER}"
-    restart: unless-stopped
 
   mqtt:
     container_name: mosquitto
     build:
       context: ./Mosquitto
       dockerfile: Dockerfile
-    restart: unless-stopped
+    restart: always
     ports:
       - 1883:1883
       - 9001:9001
