@@ -6,6 +6,7 @@ volumes:
   volume_homeassistant:
   volume_hass_config:
   volume_node_red:
+  volume_mosquitto:
 
 services:
 
@@ -17,9 +18,20 @@ services:
       - 'volume_adguard_conf:/opt/adguardhome/conf'
     network_mode: host
 
+ mqtt:
+   container_name: mosquitto
+   image: arm64v8/eclipse-mosquitto
+   restart: unless-stopped
+   ports:
+     - 1883:1883
+   volumes:
+     - volume_mosquitto:/mosquitto
+
   homeassistant:
     build: Homeassistant
-    restart: always
+    restart: unless-stopped
+    depends_on:
+      - mqtt
     volumes:
       - volume_homeassistant:/config
     ports:
@@ -36,17 +48,13 @@ services:
     environment:
       - HC_BASEPATH=/hass-config
 
-  mqtt:
-    container_name: mosquitto
-    image: arm64v8/eclipse-mosquitto
-    restart: always
-    ports:
-      - 1883:1883
-
   nodered:
     container_name: nodered
     image: nodered/node-red
-    restart: always
+    depends_on:
+      - mqtt
+      - homeassistant
+    restart: unless-stopped
     ports:
       - 1880:1880
     volumes:
