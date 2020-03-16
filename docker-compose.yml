@@ -47,14 +47,16 @@ services:
     # user: "${LOCAL_USER}:${LOCAL_USER}"
     restart: unless-stopped
 
-  # mqtt:
-  #   container_name: mosquitto
-  #   image: eclipse-mosquitto:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - 1883:1883
-  #     - 9001:9001
-  #   volumes:
-  #     - volume_mqtt_config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-  #     - volume_mqtt_data:/mosquitto/data
-  #     - volume_mqtt_log:/mosquitto/log
+  mqtt:
+    container_name: mosquitto
+    build:
+      context: ./Mosquitto
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - volume_mqtt_config:/mosquitto/config/mosquitto.conf
+      - volume_mqtt_data:/mosquitto/data
+      - volume_mqtt_log:/mosquitto/log
