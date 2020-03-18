@@ -45,6 +45,7 @@ services:
       - 3218:3218
     volumes:
       - volume_homeassistant:/hass-config
+      -  volume_mosquitto:/mosquitto
     environment:
       - HC_BASEPATH=/hass-config
 
