@@ -7,6 +7,7 @@ volumes:
   volume_hass_config:
   volume_node_red:
   volume_mosquitto:
+  volume_dhcp:
 
 services:
 
@@ -62,3 +63,24 @@ services:
       - volume_node_red:/data
     environment:
       TZ: "Europe/Luxembourg"
+
+  isc-dhcp:
+    image: "networkboot/dhcpd"
+    network_mode: host
+    volumes:
+    - volume_dhcp:/data/
+
+  glass:
+    image: "node:8"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - volume_node:/home/node/app
+      - volume_dhcp:/var/lib/dhcp
+      - volume_dhcp/dhcpd.conf:/etc/dhcp/dhcpd.conf
+      - volume_dhcp:
+    ports:
+      - "8080:8080"
+      - "3000:3000"
+    command: "/bin/sh -c 'npm install && npm start'"
