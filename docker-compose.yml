@@ -73,7 +73,7 @@ services:
 
   glass:
     image: "node:8"
-    working_dir: /home/node/app
+    working_dir: volume_node
     environment:
       - NODE_ENV=production
     volumes:
