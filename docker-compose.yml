@@ -8,6 +8,7 @@ volumes:
   volume_node_red:
   volume_mosquitto:
   volume_dhcp:
+  volume_node:
 
 services:
 
