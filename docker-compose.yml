@@ -80,7 +80,6 @@ services:
       - volume_node:/home/node/app
       - volume_dhcp:/var/lib/dhcp
       - volume_dhcp/dhcpd.conf:/etc/dhcp/dhcpd.conf
-      - volume_dhcp:
     ports:
       - "8080:8080"
       - "3000:3000"
