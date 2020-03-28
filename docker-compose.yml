@@ -37,7 +37,7 @@ services:
     volumes:
       - volume_homeassistant:/config
     ports:
-      - 8123:8123
+      - 80:80
     network_mode: host
 
   hass-configurator:
@@ -64,23 +64,3 @@ services:
       - volume_node_red:/data
     environment:
       TZ: "Europe/Luxembourg"
-
-  isc-dhcp:
-    image: "networkboot/dhcpd"
-    network_mode: host
-    volumes:
-    - volume_dhcp:/data/
-
-  glass:
-    image: "node:8"
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - volume_node:/home/node/app
-      - volume_dhcp:/var/lib/dhcp
-      - volume_dhcp:/etc/dhcp
-    ports:
-      - "8080:8080"
-      - "3000:3000"
-    command: "/bin/sh -c 'npm install && npm start'"
