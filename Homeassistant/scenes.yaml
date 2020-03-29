@@ -1,0 +1,23 @@
+- name: YouTube
+  entities:
+    media_player.living_room_tv:
+      state: on
+      source: YouTube
+
+- name: Netfilx
+  entities:
+    media_player.living_room_tv:
+      state: on
+      source: Netflix
+
+- name: IPTV
+  entities:
+    media_player.living_room_tv:
+      state: on
+      source: Smart IPTV
+
+- name: POST
+  entities:
+    media_player.living_room_tv:
+      state: on
+      source: HDMI 1

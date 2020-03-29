@@ -1,0 +1,105 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+http:
+  login_attempts_threshold: 5
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+homeassistant:
+  customize: !include customize.yaml
+
+# Home Assistant side panel customization
+panel_iframe:
+  hassconf:
+    title: HASS Configuration
+    icon: mdi:lightbulb-on
+    url: http://192.168.187.28:3218
+
+  nodered:
+    title: Node-Red
+    icon: mdi:access-point
+    url: http://192.168.187.28:1880
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+wake_on_lan: # enables `wake_on_lan` domain
+
+notify:
+
+##########################
+#                        #
+#     HomeKit       #
+#                        #
+##########################
+
+homekit:
+  filter:
+    include_domains:
+      - media_player
+    include_entities:
+      - cover.shelly_shsw_25_1128a6
+      - cover.shelly_shsw_25_f3fe95
+  entity_config:
+    media_player.living_room_tv:
+      feature_list:
+        - feature: on_off
+        - feature: toggle_mute
+
+##########################
+#                        #
+#     Media Player       #
+#                        #
+##########################
+media_player:
+
+webostv:
+  name: Living Room TV
+  host: 192.168.187.69
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret LGwebOSTV_MAC
+  customize:
+    sources:
+      - Amazon Prime Video
+      - DJTV
+      - HDMI 1
+      - HDMI 2
+      - HDMI 3
+      - HDMI 4
+      - Netflix
+      - Smart IPTV
+      - YouTube
+
+##########################
+#                        #
+#     Shelly Config      #
+#                        #
+##########################
+
+shelly:
+  username: admin
+  password: !secret shelly_password
+  discovery: true
+  sensors:
+    - all
+  devices:
+    - id: "1128A6"
+      name: Roller Dinning Window
+    - id: "F3FE95"
+      name: Roller Kitchen Window
+    - id: "BCDDC277A2A9"
+      name: Roller Living Side Window
+    - id: "BCDDC277652D"
+      name: Roller Living Side Window Small
+    - id: "BCDDC2776E8D"
+      name: Roller Living Front Window
+    - id: "E098068D4103"
+      name: Roller Living Stairs Window
