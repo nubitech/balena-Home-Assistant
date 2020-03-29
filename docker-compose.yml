@@ -50,6 +50,7 @@ services:
       - volume_mosquitto:/mosquitto
     environment:
       - HC_BASEPATH=/hass-config
+      - HC_GIT=true
 
   nodered:
     container_name: nodered

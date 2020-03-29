@@ -18,24 +18,22 @@ panel_iframe:
   hassconf:
     title: HASS Configuration
     icon: mdi:lightbulb-on
-    url: http://192.168.187.28:3218
+    url: !secret HassConf
 
   nodered:
     title: Node-Red
     icon: mdi:access-point
-    url: http://192.168.187.28:1880
+    url: !secret NodeRed
 
 # Text to speech
 tts:
   - platform: google_translate
 
-wake_on_lan: # enables `wake_on_lan` domain
-
 notify:
 
 ##########################
 #                        #
-#     HomeKit       #
+#     HomeKit            #
 #                        #
 ##########################
 
@@ -46,6 +44,10 @@ homekit:
     include_entities:
       - cover.shelly_shsw_25_1128a6
       - cover.shelly_shsw_25_f3fe95
+      - cover.shelly_shsw_25_BCDDC277A2A9
+      - cover.shelly_shsw_25_BCDDC277652D
+      - cover.shelly_shsw_25_BCDDC2776E8D
+      - cover.shelly_shsw_25_E098068D4103
   entity_config:
     media_player.living_room_tv:
       feature_list:
@@ -57,6 +59,8 @@ homekit:
 #     Media Player       #
 #                        #
 ##########################
+wake_on_lan: # enables `wake_on_lan` domain
+
 media_player:
 
 webostv:
@@ -92,14 +96,14 @@ shelly:
     - all
   devices:
     - id: "1128A6"
-      name: Roller Dinning Window
+      name: Blind Dinning Window
     - id: "F3FE95"
-      name: Roller Kitchen Window
+      name: Blind Kitchen Window
     - id: "BCDDC277A2A9"
-      name: Roller Living Side Window
+      name: Blind Living Side Window
     - id: "BCDDC277652D"
-      name: Roller Living Side Window Small
+      name: Blind Living Side Window Small
     - id: "BCDDC2776E8D"
-      name: Roller Living Front Window
+      name: Blind Living Front Window
     - id: "E098068D4103"
-      name: Roller Living Stairs Window
+      name: Blind Living Stairs Window
