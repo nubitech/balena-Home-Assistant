@@ -15,11 +15,11 @@ volumes:
 services:
 
   adguard:
-    container_name: adguard
-    image: "adguard/adguardhome:arm64-latest"
+    image: adguard/adguardhome:arm64-latest
+    restart: unless-stopped
     volumes:
-      - 'volume_adguard_work:/opt/adguardhome/work'
-      - 'volume_adguard_conf:/opt/adguardhome/conf'
+      - volume_adguard_work:/opt/adguardhome/work
+      - volume_adguard_conf:/opt/adguardhome/conf
     network_mode: host
 
   homeassistant:
@@ -27,7 +27,7 @@ services:
     restart: always
     depends_on:
       - mqtt
-      # - mariadb
+      - mariadb
     volumes:
       - volume_homeassistant:/config
     ports:
@@ -35,7 +35,6 @@ services:
     network_mode: host
 
   mqtt:
-    container_name: mosquitto
     image: arm64v8/eclipse-mosquitto
     restart: always
     ports:
@@ -43,32 +42,32 @@ services:
     volumes:
       - volume_mosquitto:/mosquitto
 
-  # mariadb:
-  #   image: jsurf/rpi-mariadb
-  #   restart: unless-stopped
-  #   # environment:
-  #   #   MYSQL_ROOT_PASSWORD: "Emtk57"
-  #   #   MYSQL_DATABASE: ha_db
-  #   #   MYSQL_USER: homeassistant
-  #   #   MYSQL_PASSWORD: "emtk57"
-  #   volumes:
-  #     - volume_mariadb:/var/lib/mysql
-  #   ports:
-  #     - 3306:3306
-  #
-  # appdaemon:
-  #   image : bubuplanet/appdaemon:latest
-  #   restart: unless-stopped
-  #   # environment:
-  #   #   # HA_URL: "http://${SERVER_IP}:8123"
-  #   #   # TOKEN: "${HA_APPDAEMON_KEY}"
-  #   #   # DASH_URL: "http://${SERVER_IP}:5050"
-  #   ports:
-  #     - 5050:5050
-  #   volumes:
-  #     - volume_appdaemon:/conf
-  #   depends_on:
-  #     - homeassistant
+  mariadb:
+    image: jsurf/rpi-mariadb
+    restart: unless-stopped
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: "Emtk57"
+    #   MYSQL_DATABASE: ha_db
+    #   MYSQL_USER: homeassistant
+    #   MYSQL_PASSWORD: "emtk57"
+    volumes:
+      - volume_mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  appdaemon:
+    image : bubuplanet/appdaemon:latest
+    restart: unless-stopped
+    # environment:
+      # HA_URL: "http://${SERVER_IP}:8123"
+      # TOKEN: "${HA_APPDAEMON_KEY}"
+      # DASH_URL: "http://${SERVER_IP}:5050"
+    ports:
+      - 5050:5050
+    volumes:
+      - volume_appdaemon:/conf
+    depends_on:
+      - homeassistant
 
   hass-configurator:
     image: "causticlab/hass-configurator-docker:arm"
