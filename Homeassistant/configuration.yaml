@@ -1,3 +1,12 @@
+     ##########################################################
+     #                                                        #
+     #.       LL       IIIIIIII  VV        VV  EEEEEEE        #
+     #.       LL          II.     VV      VV.  EE             #
+     #.       LL          II.      VV.   VV    EEEEEEE.       #
+     #        LL          II.       VV. VV.    EE             #
+     #        LLLLLLL. IIIIIIII       VV.      EEEEEEE        #
+     #                                                        #
+     ##########################################################
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -12,6 +21,11 @@ scene: !include scenes.yaml
 
 homeassistant:
   customize: !include customize.yaml
+
+logger:
+  default: warning
+  #logs:
+    #homeassistant.components.mqtt: debug
 
 # Home Assistant side panel customization
 panel_iframe:
@@ -36,7 +50,6 @@ notify:
 #     HomeKit            #
 #                        #
 ##########################
-
 homekit:
   filter:
     include_domains:
@@ -91,19 +104,39 @@ webostv:
 shelly:
   username: admin
   password: !secret shelly_password
-  discovery: true
+  discovery: false
   sensors:
     - all
   devices:
     - id: "1128A6"
-      name: Blind Dinning Window
+      name: Blind Dinning
     - id: "F3FE95"
-      name: Blind Kitchen Window
+      name: Blind Kitchen
     - id: "BCDDC277A2A9"
-      name: Blind Living Side Window
+      name: Blind Living Side
     - id: "BCDDC277652D"
-      name: Blind Living Side Window Small
+      name: Blind Living Side Small
     - id: "BCDDC2776E8D"
-      name: Blind Living Front Window
+      name: Blind Living
     - id: "E098068D4103"
-      name: Blind Living Stairs Window
+      name: Blind Living Stairs
+#   - id: "6F5670"
+#      name: Living Light
+#      light_switch: true
+
+light:
+ - platform: mqtt
+   schema: template
+   name: Light Living
+   state_topic: "shellies/ShellyVintage-6F5670/light/0/status"
+   state_template: '{% if value_json.ison %} on {% else %} off {% endif %}'
+   command_topic: "shellies/ShellyVintage-6F5670/light/0/set"
+   command_on_template: '{"turn": "on"{% if brightness is defined %}, "brightness": {{(brightness | float * 0.3882 + 1) | round(0)}}{% endif %}}'
+   command_off_template: '{"turn": "off"}'
+   brightness_template: '{{ (value_json.brightness | float * 2.55) | round(0) }}'
+   retain: true
+
+mqtt:
+  broker: 192.168.187.28
+  password: !secret mqtt
+
