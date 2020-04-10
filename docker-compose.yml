@@ -45,19 +45,21 @@ services:
   mariadb:
     image: jsurf/rpi-mariadb
     restart: unless-stopped
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: "Emtk57"
-    #   MYSQL_DATABASE: ha_db
-    #   MYSQL_USER: homeassistant
-    #   MYSQL_PASSWORD: "emtk57"
-    volumes:
-      - volume_mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "Emtk57"
+      MYSQL_DATABASE: ha_db
+      MYSQL_USER: homeassistant
+      MYSQL_PASSWORD: "emtk57"
     ports:
       - 3306:3306
+    volumes:
+      - volume_mariadb:/var/lib/mysql
 
   appdaemon:
     image : bubuplanet/appdaemon:latest
     restart: unless-stopped
+    depends_on:
+      - homeassistant
     # environment:
       # HA_URL: "http://${SERVER_IP}:8123"
       # TOKEN: "${HA_APPDAEMON_KEY}"
@@ -66,8 +68,6 @@ services:
       - 5050:5050
     volumes:
       - volume_appdaemon:/conf
-    depends_on:
-      - homeassistant
 
   hass-configurator:
     image: "causticlab/hass-configurator-docker:arm"
