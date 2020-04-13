@@ -19,4 +19,4 @@ if [ ! -d "/config/custom_components/hacs" ]; then
 fi
 
 # Starting HA
-python -m homeassistant --config /config
+#python -m homeassistant --config /config
