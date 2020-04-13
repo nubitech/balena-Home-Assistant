@@ -1,3 +1,3 @@
-FROM homeassistant/home-assistant:0.108.0
+FROM homeassistant/home-assistant:latest
 COPY start.sh .
 CMD [ "/bin/bash", "start.sh" ]
