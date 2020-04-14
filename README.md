@@ -4,11 +4,12 @@ This is a docker-compose.yml file that I use in my balena.io cloud instance. Whe
 
 1. MariaDB
 
-   - MYSQL_USER: Home Assistan (HA) user used to connect to MariaDB; this user will be created at container startup.
+   - MYSQL_USER: Home Assistan (HA) user to connect to MariaDB; will be created at container startup.
 
-   - MYSQL_PASSWORD : HA MariaDB password used to connect to MariaDB; this user will be created at container startup
+   - MYSQL_PASSWORD : HA MariaDB password to connect to MariaDB; will be created at container startup
 
    - MYSQL_DATABASE : this is the Home Assistant (HA) DB, HA will generate the tables, for that you need to configure your configure.yaml file accordingly:
+   
    ```
       recorder:
         purge_keep_days: 10
