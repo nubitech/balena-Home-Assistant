@@ -80,8 +80,8 @@ services:
     image: nodered/node-red
     restart: unless-stopped
     depends_on:
-      - _mqtt
-      - _homeassistant
+      - mqtt
+      - homeassistant
     ports:
       - 1880:1880
     volumes:
