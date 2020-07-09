@@ -1,5 +1,9 @@
 version: '2.1'
 
+#                            #
+#  LIVE DOCEKR COMPOSE FILES #
+#                            #
+
 volumes:
   volume_adguard_conf:
   volume_adguard_work:
@@ -23,7 +27,7 @@ services:
     network_mode: host
 
   homeassistant:
-    image: homeassistant/home-assistant:stable
+    image: homeassistant/home-assistant:latest
     restart: always
     depends_on:
       - mqtt
@@ -76,8 +80,8 @@ services:
     image: nodered/node-red
     restart: unless-stopped
     depends_on:
-      - mqtt
-      - homeassistant
+      - _mqtt
+      - _homeassistant
     ports:
       - 1880:1880
     volumes:
