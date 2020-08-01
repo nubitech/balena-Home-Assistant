@@ -27,7 +27,7 @@ services:
     network_mode: host
 
   homeassistant:
-    image: homeassistant/home-assistant:latest
+    image: homeassistant/home-assistant:0.113.2
     restart: always
     depends_on:
       - mqtt
